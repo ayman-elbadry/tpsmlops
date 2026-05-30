@@ -1,0 +1,29 @@
+# schema.yml — Tests de qualité des données pour les modèles dbt
+# Définit des tests 'not_null' sur les colonnes critiques.
+
+version: 2
+
+models:
+  - name: ventes_clean
+    description: "Table nettoyée avec calcul du chiffre d'affaires (CA)."
+    columns:
+      - name: produit
+        description: "Nom du produit vendu."
+        tests:
+          - not_null
+      - name: quantite
+        description: "Quantité vendue."
+        tests:
+          - not_null
+      - name: categorie
+        description: "Catégorie du produit."
+        tests:
+          - not_null
+
+  - name: ventes_resume
+    description: "Résumé agrégé des ventes par catégorie."
+    columns:
+      - name: categorie
+        description: "Catégorie du produit."
+        tests:
+          - not_null

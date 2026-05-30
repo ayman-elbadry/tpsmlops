@@ -1,0 +1,15 @@
+# dbt_project.yml — Configuration du projet dbt
+# Ce fichier définit le nom du projet, la version de dbt,
+# ainsi que la matérialisation par défaut des modèles (en table).
+
+name: 'dbt_pipeline'
+version: '1.0.0'
+
+profile: 'dbt_pipeline'
+
+model-paths: ["models"]
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  dbt_pipeline:
+    +materialized: table
