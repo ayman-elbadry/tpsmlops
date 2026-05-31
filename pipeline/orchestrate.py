@@ -8,7 +8,7 @@ Enchaîne séquentiellement les étapes du pipeline :
 """
 
 import os
-from dagster import op, job
+from dagster import op, job, In, Nothing
 
 
 # Répertoire racine du projet
@@ -26,7 +26,7 @@ def ingest(context):
     context.log.info(">>> Ingestion terminée avec succès.")
 
 
-@op
+@op(ins={"start": In(Nothing)})
 def validate(context):
     """Étape 2 : Validation des données dans DuckDB."""
     context.log.info(">>> Lancement de la validation...")
@@ -37,7 +37,7 @@ def validate(context):
     context.log.info(">>> Validation terminée avec succès.")
 
 
-@op
+@op(ins={"start": In(Nothing)})
 def transform(context):
     """Étape 3 : Transformation des données avec dbt (dbt run)."""
     context.log.info(">>> Lancement de dbt run...")
@@ -48,7 +48,7 @@ def transform(context):
     context.log.info(">>> dbt run terminé avec succès.")
 
 
-@op
+@op(ins={"start": In(Nothing)})
 def test_data(context):
     """Étape 4 : Tests de qualité des données avec dbt (dbt test)."""
     context.log.info(">>> Lancement de dbt test...")
@@ -65,10 +65,7 @@ def pipeline_job():
     Job Dagster : exécute les 4 étapes du pipeline dans l'ordre.
     ingest -> validate -> transform -> test_data
     """
-    result_ingest = ingest()
-    result_validate = validate(result_ingest)
-    result_transform = transform(result_validate)
-    test_data(result_transform)
+    test_data(start=transform(start=validate(start=ingest())))
 
 
 if __name__ == "__main__":

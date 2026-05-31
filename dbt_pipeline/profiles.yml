@@ -6,4 +6,4 @@ dbt_pipeline:
   outputs:
     dev:
       type: duckdb
-      path: ../ventes.duckdb
+      path: ./ventes.duckdb

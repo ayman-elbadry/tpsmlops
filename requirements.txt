@@ -1,0 +1,5 @@
+pandas
+duckdb
+dbt-core
+dbt-duckdb
+dagster
