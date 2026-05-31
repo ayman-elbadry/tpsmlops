@@ -42,7 +42,7 @@ def validate():
         raise ValueError(
             f"[VALIDATE] ERREUR : Colonnes manquantes dans 'ventes_raw' : {missing_columns}"
         )
-    print("[VALIDATE] ✅ Toutes les colonnes requises sont présentes.")
+    print("[VALIDATE] [OK] Toutes les colonnes requises sont présentes.")
 
     # ---- Étape 2 : Vérification des valeurs NULL ----
     print("[VALIDATE] Vérification de l'absence de valeurs NULL sur les champs clés...")
@@ -56,7 +56,7 @@ def validate():
                 f"dans la colonne '{col}'."
             )
 
-    print("[VALIDATE] ✅ Aucune valeur NULL détectée sur les champs essentiels.")
+    print("[VALIDATE] [OK] Aucune valeur NULL détectée sur les champs essentiels.")
     con.close()
     print("[VALIDATE] Validation terminée avec succès.")
 
